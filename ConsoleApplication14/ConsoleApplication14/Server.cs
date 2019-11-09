@@ -31,14 +31,14 @@ namespace ConsoleApplication14
                 byte[] receivedBytes = server.Receive(ref remoteIPEndPoint);
                 string rcvdata = Encoding.ASCII.GetString(receivedBytes);
                 Dz.deserialize(rcvdata);
-                Console.WriteLine("server: receive finished");
+                Console.WriteLine("server: receive");
                 send();
             }
         }
 
         public override void send()
         {
-            Console.WriteLine("server: send triggered");
+            Console.WriteLine("server: send");
             server.Send(Encoding.ASCII.GetBytes(Sz.serialize()), Sz.serialize().Length, remoteIPEndPoint);
             Console.WriteLine("Data send to" + remoteIPEndPoint);
         }
