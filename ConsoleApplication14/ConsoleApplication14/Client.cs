@@ -23,6 +23,7 @@ namespace ConsoleApplication14
         public void connect()
         {
             client.Connect(address, 8008);
+            Console.WriteLine("Client is Started");
             send();
         }
 

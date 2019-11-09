@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.645
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ping Pong Client", "..\Ping Pong Client\Ping Pong Client\Ping Pong Client.csproj", "{26A286C6-1836-4302-A387-70393F5C3284}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ping Pong Server", "..\Ping Pong Server\Ping Pong Server\Ping Pong Server.csproj", "{E67B5DC3-D919-4CBE-A9D7-94F6AE867FF5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{26A286C6-1836-4302-A387-70393F5C3284}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26A286C6-1836-4302-A387-70393F5C3284}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26A286C6-1836-4302-A387-70393F5C3284}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26A286C6-1836-4302-A387-70393F5C3284}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E67B5DC3-D919-4CBE-A9D7-94F6AE867FF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E67B5DC3-D919-4CBE-A9D7-94F6AE867FF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E67B5DC3-D919-4CBE-A9D7-94F6AE867FF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E67B5DC3-D919-4CBE-A9D7-94F6AE867FF5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FB035A36-0F57-41EB-8EE5-E4ABC33A0AA1}
+	EndGlobalSection
+EndGlobal

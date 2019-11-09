@@ -11,8 +11,6 @@ namespace ConsoleApplication14
 {
     class Server:Networkcomponent
     {
-        string data = "";
-
         UdpClient server = new UdpClient(8008);
         Serializer Sz = new Serializer();
         Deserializer Dz = new Deserializer();
@@ -43,7 +41,6 @@ namespace ConsoleApplication14
             Console.WriteLine("server: send triggered");
             server.Send(Encoding.ASCII.GetBytes(Sz.serialize()), Sz.serialize().Length, remoteIPEndPoint);
             Console.WriteLine("Data send to" + remoteIPEndPoint);
-            receive();
         }
     }
 }
