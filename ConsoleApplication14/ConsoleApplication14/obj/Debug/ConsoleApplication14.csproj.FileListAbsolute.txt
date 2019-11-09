@@ -11,3 +11,10 @@ C:\Users\Felix\Desktop\ConsoleApplication14\ConsoleApplication14\obj\Debug\Conso
 C:\Users\Felix\Desktop\ConsoleApplication14\ConsoleApplication14\obj\Debug\ConsoleApplication14.csproj.CoreCompileInputs.cache
 C:\Users\Felix\Desktop\ConsoleApplication14\ConsoleApplication14\obj\Debug\ConsoleApplication14.exe
 C:\Users\Felix\Desktop\ConsoleApplication14\ConsoleApplication14\obj\Debug\ConsoleApplication14.pdb
+C:\Users\Felix\source\repos\Felix803\Netzwerk-Pong2\ConsoleApplication14\ConsoleApplication14\obj\Debug\ConsoleApplication14.csprojAssemblyReference.cache
+C:\Users\Felix\source\repos\Felix803\Netzwerk-Pong2\ConsoleApplication14\ConsoleApplication14\obj\Debug\ConsoleApplication14.csproj.CoreCompileInputs.cache
+C:\Users\Felix\source\repos\Felix803\Netzwerk-Pong2\ConsoleApplication14\ConsoleApplication14\obj\Debug\ConsoleApplication14.exe
+C:\Users\Felix\source\repos\Felix803\Netzwerk-Pong2\ConsoleApplication14\ConsoleApplication14\obj\Debug\ConsoleApplication14.pdb
+C:\Users\Felix\source\repos\Felix803\Netzwerk-Pong2\ConsoleApplication14\ConsoleApplication14\bin\Debug\ConsoleApplication14.exe.config
+C:\Users\Felix\source\repos\Felix803\Netzwerk-Pong2\ConsoleApplication14\ConsoleApplication14\bin\Debug\ConsoleApplication14.exe
+C:\Users\Felix\source\repos\Felix803\Netzwerk-Pong2\ConsoleApplication14\ConsoleApplication14\bin\Debug\ConsoleApplication14.pdb

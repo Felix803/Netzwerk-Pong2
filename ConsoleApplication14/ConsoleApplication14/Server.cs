@@ -9,66 +9,41 @@ using System.Threading;
 
 namespace ConsoleApplication14
 {
-    class Server : Networkcomponent
+    class Server:Networkcomponent
     {
-        bool done = false;
-        private int listenPortServer = 55600;
-        string ipAddress = "127.0.0.1";
-        int sendPortServer = 55601; //send on port 55601
-        byte[] data;  //string tosend by Server
-        Serializer Sz = new Serializer();
+        string data = "";
 
-        public void startThreadServerSend()
+        UdpClient server = new UdpClient(8008);
+        Serializer Sz = new Serializer();
+        Deserializer Dz = new Deserializer();
+
+        IPEndPoint remoteIPEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 0);
+        public void startTrhead()
         {
-            Thread ListeningThreadServer = new Thread(send);
+            Thread ListeningThreadServer = new Thread(receive);
             ListeningThreadServer.Start();
         }
-        public void startThreadServerReceive()
-        {
-            Thread SendingThreadServer = new Thread(receive);
-            SendingThreadServer.Start();
-        }
 
-        //Methode "start" actually not in use
-        public override void start()
-        {
-            Console.WriteLine("Server gestartet");
-            //send();
-            //receive();
 
-        }
         public override void receive()
         {
-            using (UdpClient listener = new UdpClient(listenPortServer))
+            Console.WriteLine("Server started");
+            Console.WriteLine("server: receive triggered");
+            while (true)
             {
-                IPEndPoint listenEndPoint = new IPEndPoint(IPAddress.Any, listenPortServer);
-                while (!done)
-                {
-                    byte[] receivedData = listener.Receive(ref listenEndPoint);
-                    Console.WriteLine("Received broadcast message from client {0}", listenEndPoint.ToString());
-                    Console.WriteLine("Decoded data is:");
-                    Console.WriteLine(Encoding.ASCII.GetString(receivedData)); //should be "Hello World" sent from above client
-                    Console.WriteLine("Server: received data");
-                }
+                byte[] receivedBytes = server.Receive(ref remoteIPEndPoint);
+                data = Encoding.ASCII.GetString(receivedBytes);
+                Dz.deserialize(data);
+                Console.WriteLine(data);
+                send();
             }
         }
+
         public override void send()
         {
-            try
-            {
-                using (var server = new UdpClient())
-                {
-                    data = Encoding.ASCII.GetBytes(Sz.serialize());
-                    IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ipAddress), sendPortServer);
-                    server.Connect(ep);
-                    server.Send(data, data.Length);
-                    Console.WriteLine("Server: data sended");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
+            Console.WriteLine("server: send triggered");
+            server.Send(Encoding.ASCII.GetBytes(Sz.serialize()), Sz.serialize().Length, remoteIPEndPoint);
+            Console.WriteLine("Data send to" + remoteIPEndPoint);
         }
     }
 }

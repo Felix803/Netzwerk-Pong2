@@ -16,12 +16,11 @@ namespace ConsoleApplication14
         
         static void Main(string[] args)
         {
-            Server server = new Server();
             Client client = new Client();
-            server.startThreadServerReceive();
-            client.startThreadClientSend();
-            client.startThreadClientReceive();
-            server.startThreadServerSend();       
+            Server server = new Server();
+            server.startTrhead();
+            client.connect();
+
         }
     }
     
