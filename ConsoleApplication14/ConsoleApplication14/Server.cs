@@ -27,14 +27,13 @@ namespace ConsoleApplication14
 
         public override void receive()
         {
-            Console.WriteLine("Server started");
             Console.WriteLine("server: receive triggered");
             while (true)
             {
                 byte[] receivedBytes = server.Receive(ref remoteIPEndPoint);
-                data = Encoding.ASCII.GetString(receivedBytes);
-                Dz.deserialize(data);
-                Console.WriteLine(data);
+                string rcvdata = Encoding.ASCII.GetString(receivedBytes);
+                Dz.deserialize(rcvdata);
+                Console.WriteLine("server: receive finished");
                 send();
             }
         }
@@ -44,6 +43,7 @@ namespace ConsoleApplication14
             Console.WriteLine("server: send triggered");
             server.Send(Encoding.ASCII.GetBytes(Sz.serialize()), Sz.serialize().Length, remoteIPEndPoint);
             Console.WriteLine("Data send to" + remoteIPEndPoint);
+            receive();
         }
     }
 }
