@@ -92,7 +92,6 @@ namespace Ping_Pong_Client
             this.player_2.Size = new System.Drawing.Size(20, 103);
             this.player_2.TabIndex = 3;
             this.player_2.TabStop = false;
-            this.player_2.Click += new System.EventHandler(this.player_2_Click);
             // 
             // ball
             // 

@@ -92,12 +92,14 @@ namespace Ping_Pong_Client
             if (server != null)
             {
                 controle_player1();
+                calculate_enemy_player2();
                 controle_ball();
             }
 
             if (client != null)
             {
                 controle_player2();
+                calculate_enemy_player1();
                 controle_ball();
             }
         }
@@ -131,9 +133,6 @@ namespace Ping_Pong_Client
             {
                 server.send(serialize_player1());
             }
-            
-
-
         }
 
         private void controle_player2()
@@ -164,6 +163,29 @@ namespace Ping_Pong_Client
             player1.player_score = Convert.ToInt32(array_data_received_client[2]);
 
 
+        }
+        private void calculate_enemy_player2()
+        {
+            if (player2.go_up == true && player_2.Top > 0)
+            {
+                player_2.Top -= 8;
+            }
+            if (player2.go_down == true && player_2.Top < 455)
+            {
+                player_2.Top += 8;
+            }
+        }
+
+        private void calculate_enemy_player1()
+        {
+            if (player1.go_up == true && player_1.Top > 0)
+            {
+                player_1.Top -= 8;
+            }
+            if (player1.go_down == true && player_1.Top < 455)
+            {
+                player_1.Top += 8;
+            }
         }
 
         private void controle_ball()
@@ -250,9 +272,5 @@ namespace Ping_Pong_Client
             return serialized;
         }
 
-        private void player_2_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
