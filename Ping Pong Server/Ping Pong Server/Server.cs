@@ -76,7 +76,6 @@ namespace Ping_Pong_Client
             try
             {
                 sendBytes = Encoding.ASCII.GetBytes(data);
-                Thread.Sleep(2000);
                 server.Send(sendBytes, sendBytes.GetLength(0), remoteIPEndPoint);
             }
             catch (Exception ex)
