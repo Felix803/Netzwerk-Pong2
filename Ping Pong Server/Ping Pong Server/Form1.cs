@@ -47,6 +47,7 @@ namespace Ping_Pong_Client
         private void Server_Button_Click(object sender, EventArgs e)
         {
             server = new Server(this);
+            
             Server_Info.Text = "Server bereit.";
             server.startTrheadServer();
         }
@@ -125,7 +126,12 @@ namespace Ping_Pong_Client
             player2.go_down = Convert.ToBoolean(array_data_received_server[0]);
             player2.go_up = Convert.ToBoolean(array_data_received_server[1]);
             player2.player_score = Convert.ToInt32(array_data_received_server[2]);
-            server.send(serialize_player1());
+
+            if (server.ClientConnected)
+            {
+                server.send(serialize_player1());
+            }
+            
 
 
         }
@@ -194,15 +200,43 @@ namespace Ping_Pong_Client
                 ballx = -ballx;
             }
         }
-        public void callback_receive_server(string[] array_receive_server)
+        public void callback_receive_server(string[] data)
         {
-            array_data_received_server = array_receive_server;
-            Console.WriteLine("server: callback finished");
+            if(data.Length > 2)
+            {
+                player2.go_down = false;
+                player2.go_up = false;
+                if (data[0] == "True")
+                {
+                    player2.go_down = true;
+                }
+                if (data[1] == "True")
+                {
+                    player2.go_up = true;
+                }
+            }
+            array_data_received_server = data;
+            Console.WriteLine("@Server: callback finished");
         }
-        public void callback_receive_client(string[] array_receive_client)
+        public void callback_receive_client(string[] data)
         {
-            array_data_received_client = array_receive_client;
-            Console.WriteLine("server: callback finished");
+            if (data.Length > 2)
+            {
+                player1.go_down = false;
+                player1.go_up = false;
+                if (data[0] == "True")
+                {
+                    player1.go_down = true;
+                }
+                if (data[1] == "True")
+                {
+                    player1.go_up = true;
+                }
+
+            }
+
+            array_data_received_client = data;
+            Console.WriteLine("@Client: callback finished");
         }
         public string serialize_player1()
         {

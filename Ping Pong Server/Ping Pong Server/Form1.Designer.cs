@@ -77,7 +77,7 @@ namespace Ping_Pong_Client
             // 
             this.player_1.BackColor = System.Drawing.Color.Yellow;
             this.player_1.Location = new System.Drawing.Point(79, 7);
-            this.player_1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.player_1.Margin = new System.Windows.Forms.Padding(2);
             this.player_1.Name = "player_1";
             this.player_1.Size = new System.Drawing.Size(20, 103);
             this.player_1.TabIndex = 2;
@@ -87,7 +87,7 @@ namespace Ping_Pong_Client
             // 
             this.player_2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.player_2.Location = new System.Drawing.Point(551, 7);
-            this.player_2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.player_2.Margin = new System.Windows.Forms.Padding(2);
             this.player_2.Name = "player_2";
             this.player_2.Size = new System.Drawing.Size(20, 103);
             this.player_2.TabIndex = 3;
@@ -98,7 +98,7 @@ namespace Ping_Pong_Client
             // 
             this.ball.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ball.Location = new System.Drawing.Point(206, 96);
-            this.ball.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ball.Margin = new System.Windows.Forms.Padding(2);
             this.ball.Name = "ball";
             this.ball.Size = new System.Drawing.Size(20, 21);
             this.ball.TabIndex = 4;
@@ -107,7 +107,7 @@ namespace Ping_Pong_Client
             // gameTimer
             // 
             this.gameTimer.Enabled = true;
-            this.gameTimer.Interval = 20;
+            this.gameTimer.Interval = 1000;
             this.gameTimer.Tick += new System.EventHandler(this.timertick);
             // 
             // Server_Info
@@ -126,7 +126,7 @@ namespace Ping_Pong_Client
             this.panel1.Controls.Add(this.Server_Button);
             this.panel1.Controls.Add(this.Server_Info);
             this.panel1.Location = new System.Drawing.Point(1, 414);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(85, 46);
             this.panel1.TabIndex = 7;
@@ -134,7 +134,7 @@ namespace Ping_Pong_Client
             // Server_Button
             // 
             this.Server_Button.Location = new System.Drawing.Point(0, 25);
-            this.Server_Button.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Server_Button.Margin = new System.Windows.Forms.Padding(2);
             this.Server_Button.Name = "Server_Button";
             this.Server_Button.Size = new System.Drawing.Size(82, 19);
             this.Server_Button.TabIndex = 7;
@@ -147,7 +147,7 @@ namespace Ping_Pong_Client
             this.panel2.Controls.Add(this.Client_info);
             this.panel2.Controls.Add(this.Client_Button);
             this.panel2.Location = new System.Drawing.Point(595, 412);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(100, 47);
             this.panel2.TabIndex = 8;
@@ -166,7 +166,7 @@ namespace Ping_Pong_Client
             // Client_Button
             // 
             this.Client_Button.Location = new System.Drawing.Point(4, 27);
-            this.Client_Button.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Client_Button.Margin = new System.Windows.Forms.Padding(2);
             this.Client_Button.Name = "Client_Button";
             this.Client_Button.Size = new System.Drawing.Size(95, 18);
             this.Client_Button.TabIndex = 0;
@@ -189,9 +189,9 @@ namespace Ping_Pong_Client
             this.Controls.Add(this.player1_score);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
-            this.Text = "Ping Pong Game";
+            this.Text = "Ping Pong Server";
             ((System.ComponentModel.ISupportInitialize)(this.player_1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.player_2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ball)).EndInit();

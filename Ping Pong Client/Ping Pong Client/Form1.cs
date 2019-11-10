@@ -125,8 +125,8 @@ namespace Ping_Pong_Client
             player2.go_down = Convert.ToBoolean(array_data_received_server[0]);
             player2.go_up = Convert.ToBoolean(array_data_received_server[1]);
             player2.player_score = Convert.ToInt32(array_data_received_server[2]);
-            server.send(serialize_player1());
-            
+
+            server.send(serialize_player1()); 
            
         }
 
@@ -152,12 +152,12 @@ namespace Ping_Pong_Client
                 gameTimer.Stop();
                 MessageBox.Show("Player_2 wins more luck next time looooser!");
             }
-            client.send(serialize_player2());
+           
             player1.go_down = Convert.ToBoolean(array_data_received_client[0]);
             player1.go_up = Convert.ToBoolean(array_data_received_client[1]);
             player1.player_score = Convert.ToInt32(array_data_received_client[2]);
-            
-            
+
+          //  client.send(serialize_player2());
         }
 
         private void controle_ball()

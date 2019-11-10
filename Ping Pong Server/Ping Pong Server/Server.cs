@@ -19,6 +19,19 @@ namespace Ping_Pong_Client
         Form1 f1;
         byte[] sendBytes = new Byte[1024];
 
+        bool clientConnected = false;
+        public bool ClientConnected
+        {
+            get
+            {
+                return this.clientConnected;
+            }
+            set
+            {
+                this.clientConnected = value;
+            }
+        }
+
         public Server(Form1 form)
         {
             f1 = form;
@@ -33,33 +46,44 @@ namespace Ping_Pong_Client
 
         public override void receive()
         {
-            Console.WriteLine("server: receive triggered");
-            string[] array_return_server = new string[3];
             while (true)
             {
                 byte[] receivedBytes = server.Receive(ref remoteIPEndPoint);
+                
                 string rcvdata = Encoding.ASCII.GetString(receivedBytes);
-                Dz.deserialize(rcvdata);
-                for (int i = 0; i < Dz.deserialize(rcvdata).Length; i++)
+                
+                if (rcvdata == "Connect")
                 {
-                    array_return_server[i] = Dz.deserialize(rcvdata)[i];
+                    clientConnected = true;
+                    Console.WriteLine("@Server: Client connected");
+                    continue;
                 }
+
+                string[] array_return_server = Dz.deserialize(rcvdata);
+
                 for (int i = 0; i < array_return_server.Length; i++)
                 {
-                    Console.WriteLine("server: data received is: " + array_return_server[i]);
+                    Console.WriteLine("@Server: recieved data " + array_return_server[i]);
                 }
-                Console.WriteLine("server: receive finished");
+
                 f1.callback_receive_server(array_return_server);
             }
         }
 
         public void send(string data)
         {
-            Console.WriteLine("server: send triggered");
-            sendBytes = Encoding.ASCII.GetBytes(data);
-            Thread.Sleep(2000);
-            server.Send(sendBytes, sendBytes.GetLength(0));
-            Console.WriteLine("Data send to" + remoteIPEndPoint);
+            Console.WriteLine("@Server: data " + data + " send to " + remoteIPEndPoint.Address);
+            try
+            {
+                sendBytes = Encoding.ASCII.GetBytes(data);
+                Thread.Sleep(2000);
+                server.Send(sendBytes, sendBytes.GetLength(0), remoteIPEndPoint);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+ 
         }
     }
     /* class NWServer

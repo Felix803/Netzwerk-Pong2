@@ -28,42 +28,46 @@ namespace Ping_Pong_Client
         }
         public void startThreadClient()
         {
-            Thread ListeningThreadClient = new Thread(connect);
+            client.Connect(address, 8008);
+            send("Connect");
+            Thread ListeningThreadClient = new Thread(receive);
             ListeningThreadClient.Start();
+            
         }
 
-        public void connect()
-        {
-            client.Connect(address, 8008);
-            Console.WriteLine("Client is Started");
-            receive();
-        }
 
         public void send(string data)
         {
-            Console.WriteLine("client: send triggered");
-            sendBytes = Encoding.ASCII.GetBytes(data);
-            client.Send(sendBytes, sendBytes.GetLength(0));
+            Console.WriteLine("@Client: Send data + " + data);
+            try
+            {
+                
+                sendBytes = Encoding.ASCII.GetBytes(data);
+                client.Send(sendBytes, sendBytes.GetLength(0));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+           
+            
         }
 
         public override void receive()
         {
-            string[] array_return_client = new string[2];
-            Console.WriteLine("client: receive triggered");
+            
             while (true)
             {
                 rcvPacket = client.Receive(ref remoteIPEndPoint);
                 string rcvData = Encoding.ASCII.GetString(rcvPacket);
                 Dz.deserialize(rcvData);
-                for (int i = 0; i < Dz.deserialize(rcvData).Length; i++)
-                {
-                    array_return_client[i] = Dz.deserialize(rcvData)[i];
-                }
+                Console.WriteLine("@Client: recieved data " + rcvData);
+                string[] array_return_client = Dz.deserialize(rcvData);
+   
                 for (int i = 0; i < array_return_client.Length; i++)
                 {
-                    Console.WriteLine("client: data received is: " + array_return_client[i]);
+                    Console.WriteLine("@Client: received data " + array_return_client[i]);
                 }
-                Console.WriteLine("client: receive finished");
                 f1.callback_receive_client(array_return_client);
             }
 

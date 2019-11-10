@@ -58,6 +58,7 @@ namespace Ping_Pong_Client
             Console.WriteLine("server: send triggered");
             sendBytes = Encoding.ASCII.GetBytes(data);
             Thread.Sleep(2000);
+            
             server.Send(sendBytes, sendBytes.GetLength(0));
             Console.WriteLine("Data send to" + remoteIPEndPoint);
         }
