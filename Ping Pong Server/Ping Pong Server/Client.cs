@@ -33,7 +33,6 @@ namespace Ping_Pong_Client
             send("Connect");
             Thread ListeningThreadClient = new Thread(receive);
             ListeningThreadClient.Start();
-
         }
 
 
@@ -42,7 +41,6 @@ namespace Ping_Pong_Client
             Console.WriteLine("@Client: Send data + " + data);
             try
             {
-
                 sendBytes = Encoding.ASCII.GetBytes(data);
                 client.Send(sendBytes, sendBytes.GetLength(0));
             }
@@ -50,13 +48,10 @@ namespace Ping_Pong_Client
             {
                 Console.WriteLine(ex);
             }
-
-
         }
 
         public override void receive()
         {
-
             while (true)
             {
                 rcvPacket = client.Receive(ref remoteIPEndPoint);
@@ -71,9 +66,7 @@ namespace Ping_Pong_Client
                 }
                 f1.callback_receive_client(array_return_client);
             }
-
         }
-
     }
 
     /*  class NWClient

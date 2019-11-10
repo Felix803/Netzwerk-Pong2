@@ -106,7 +106,7 @@ namespace Ping_Pong_Client
             // gameTimer
             // 
             this.gameTimer.Enabled = true;
-            this.gameTimer.Interval = 1000;
+            this.gameTimer.Interval = 20;
             this.gameTimer.Tick += new System.EventHandler(this.timertick);
             // 
             // Server_Info
