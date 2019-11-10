@@ -27,6 +27,7 @@ namespace Ping_Pong_Client
         int bally = 5;//vertikale Geschwindigkeit (Vektor)
         public string serialized;
         public string[] array_data_received_server = new string[3];
+        public string[] array_data_received_client = new string[3];
 
 
         public Form1()
@@ -40,14 +41,14 @@ namespace Ping_Pong_Client
         }
         private void Client_Button_Click(object sender, EventArgs e)
         {
-            client = new Client();
-            client.connect();  
+            client = new Client(this);
+            client.startThreadClient();  
         }
         private void Server_Button_Click(object sender, EventArgs e)
         {
             server = new Server(this);
             Server_Info.Text = "Server bereit.";
-            server.startTrhead();
+            server.startTrheadServer();
         }
         
         public void change_Server_Info(string server_info)
@@ -152,9 +153,9 @@ namespace Ping_Pong_Client
                 MessageBox.Show("Player_2 wins more luck next time looooser!");
             }
             client.send(serialize_player2());
-            player1.go_down = Convert.ToBoolean(client.receive()[0]);
-            player1.go_up = Convert.ToBoolean(client.receive()[1]);
-            player1.player_score = Convert.ToInt32(client.receive()[2]);
+            player1.go_down = Convert.ToBoolean(array_data_received_client[0]);
+            player1.go_up = Convert.ToBoolean(array_data_received_client[1]);
+            player1.player_score = Convert.ToInt32(array_data_received_client[2]);
             
             
         }
@@ -193,9 +194,14 @@ namespace Ping_Pong_Client
                 ballx = -ballx;
             }
         }
-        public void callback_receive(string[]array_receive)
+        public void callback_receive_server(string[]array_receive_server)
         {
-            array_data_received_server = array_receive;
+            array_data_received_server = array_receive_server;
+            Console.WriteLine("server: callback finished");
+        }
+        public void callback_receive_client(string[] array_receive_client)
+        {
+            array_data_received_client = array_receive_client;
             Console.WriteLine("server: callback finished");
         }
         public string serialize_player1()
@@ -210,6 +216,9 @@ namespace Ping_Pong_Client
             return serialized;
         }
 
+        private void player_2_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

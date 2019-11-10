@@ -24,7 +24,7 @@ namespace Ping_Pong_Client
             f1 = form;
         }
         IPEndPoint remoteIPEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 0);
-       public void startTrhead()
+       public void startTrheadServer()
        {
            Thread ListeningThreadServer = new Thread(receive);
            ListeningThreadServer.Start();
@@ -34,7 +34,7 @@ namespace Ping_Pong_Client
         public override void receive()
         {
             Console.WriteLine("server: receive triggered");
-            string[] array_return = new string[3];
+            string[] array_return_server = new string[3];
             while (true)
             {
                 byte[] receivedBytes = server.Receive(ref remoteIPEndPoint);
@@ -42,14 +42,14 @@ namespace Ping_Pong_Client
                 Dz.deserialize(rcvdata);
                 for (int i = 0; i < Dz.deserialize(rcvdata).Length; i++)
                 {
-                    array_return[i] = Dz.deserialize(rcvdata)[i];
+                    array_return_server[i] = Dz.deserialize(rcvdata)[i];
                 }
-                for (int i = 0; i < array_return.Length; i++)
+                for (int i = 0; i < array_return_server.Length; i++)
                 {
-                    Console.WriteLine("data received is: " + array_return[i]);
+                    Console.WriteLine("server: data received is: " + array_return_server[i]);
                 }
                 Console.WriteLine("server: receive finished");
-                f1.callback_receive(array_return);
+                f1.callback_receive_server(array_return_server);
             }
         }
 
