@@ -94,7 +94,6 @@ namespace Ping_Pong_Client
                 controle_player1();
                 calculate_enemy_player2();
                 controle_ball();
-                
             }
 
             if (client != null)

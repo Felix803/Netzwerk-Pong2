@@ -55,7 +55,7 @@ namespace Ping_Pong_Client
                 if (rcvdata == "Connect")
                 {
                     clientConnected = true;
-                    Console.WriteLine("@Server: Client connected");
+                    //Console.WriteLine("@Server: Client connected");
                     continue;
                 }
 
@@ -63,7 +63,7 @@ namespace Ping_Pong_Client
 
                 for (int i = 0; i < array_return_server.Length; i++)
                 {
-                    Console.WriteLine("@Server: recieved data " + array_return_server[i]);
+                    //Console.WriteLine("@Server: recieved data " + array_return_server[i]);
                 }
 
                 f1.callback_receive_server(array_return_server);
@@ -72,7 +72,7 @@ namespace Ping_Pong_Client
 
         public void send(string data)
         {
-            Console.WriteLine("@Server: data " + data + " send to " + remoteIPEndPoint.Address);
+            //Console.WriteLine("@Server: data " + data + " send to " + remoteIPEndPoint.Address);
             try
             {
                 sendBytes = Encoding.ASCII.GetBytes(data);

@@ -38,7 +38,7 @@ namespace Ping_Pong_Client
 
         public void send(string data)
         {
-            Console.WriteLine("@Client: Send data + " + data);
+            //Console.WriteLine("@Client: Send data + " + data);
             try
             {
                 sendBytes = Encoding.ASCII.GetBytes(data);
@@ -57,12 +57,12 @@ namespace Ping_Pong_Client
                 rcvPacket = client.Receive(ref remoteIPEndPoint);
                 string rcvData = Encoding.ASCII.GetString(rcvPacket);
                 Dz.deserialize(rcvData);
-                Console.WriteLine("@Client: recieved data " + rcvData);
+                //Console.WriteLine("@Client: recieved data " + rcvData);
                 string[] array_return_client = Dz.deserialize(rcvData);
 
                 for (int i = 0; i < array_return_client.Length; i++)
                 {
-                    Console.WriteLine("@Client: received data " + array_return_client[i]);
+                    //Console.WriteLine("@Client: received data " + array_return_client[i]);
                 }
                 f1.callback_receive_client(array_return_client);
             }
