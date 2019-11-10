@@ -11,8 +11,7 @@ using System.Net.Sockets;
 namespace Ping_Pong_Client
 {
 
-
-    class Client 
+    class Client:Networkcomponent
     {
         byte[] sendBytes = new Byte[1024];
         byte[] rcvPacket = new Byte[1024];
@@ -21,11 +20,23 @@ namespace Ping_Pong_Client
         IPEndPoint remoteIPEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 0);
         Serializer Sz = new Serializer();
         Deserializer Dz = new Deserializer();
+        Form1 f1;
+
+        public Client(Form1 form)
+        {
+            f1 = form;
+        }
+        public void startThreadClient()
+        {
+            Thread ListeningThreadClient = new Thread(connect);
+            ListeningThreadClient.Start();
+        }
 
         public void connect()
         {
             client.Connect(address, 8008);
             Console.WriteLine("Client is Started");
+            receive();
         }
 
         public void send(string data)
@@ -35,9 +46,9 @@ namespace Ping_Pong_Client
             client.Send(sendBytes, sendBytes.GetLength(0));
         }
 
-        public string[] receive()
+        public override void receive()
         {
-            string[] array_return = new string[2];
+            string[] array_return_client = new string[2];
             Console.WriteLine("client: receive triggered");
             while (true)
             {
@@ -46,10 +57,14 @@ namespace Ping_Pong_Client
                 Dz.deserialize(rcvData);
                 for (int i = 0; i < Dz.deserialize(rcvData).Length; i++)
                 {
-                    array_return[i] = Dz.deserialize(rcvData)[i];
+                    array_return_client[i] = Dz.deserialize(rcvData)[i];
+                }
+                for (int i = 0; i < array_return_client.Length; i++)
+                {
+                    Console.WriteLine("client: data received is: " + array_return_client[i]);
                 }
                 Console.WriteLine("client: receive finished");
-                return array_return;
+                f1.callback_receive_client(array_return_client);
             }
 
         }
