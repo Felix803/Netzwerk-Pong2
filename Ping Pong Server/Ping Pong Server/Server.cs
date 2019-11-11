@@ -14,7 +14,6 @@ namespace Ping_Pong_Client
     class Server : Networkcomponent
     {
         UdpClient server = new UdpClient(8008);
-        Serializer Sz = new Serializer();
         Deserializer Dz = new Deserializer();
         Form1 f1;
         byte[] sendBytes = new Byte[1024];

@@ -18,7 +18,6 @@ namespace Ping_Pong_Client
         UdpClient client = new UdpClient();
         IPAddress address = IPAddress.Parse("127.0.0.1");
         IPEndPoint remoteIPEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 0);
-        Serializer Sz = new Serializer();
         Deserializer Dz = new Deserializer();
         Form1 f1;
 
@@ -32,7 +31,6 @@ namespace Ping_Pong_Client
             send("Connect");
             Thread ListeningThreadClient = new Thread(receive);
             ListeningThreadClient.Start();
-            
         }
 
 

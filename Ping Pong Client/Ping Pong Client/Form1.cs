@@ -23,12 +23,10 @@ namespace Ping_Pong_Client
         Server server;
         Player player1 = new Player(false, false, 0);
         Player player2 = new Player(false, false, 0);
-        int ballx = 5;//horizontale Geschwindigkeit (Vektor)
-        int bally = 5;//vertikale Geschwindigkeit (Vektor)
-        public string serialized;
-        public string[] array_data_received_server = new string[3];
-        public string[] array_data_received_client = new string[3];
+        Ball ball1 = new Ball(5, 5, 434, 225);
+        Serializer Sz = new Serializer();
 
+        public string serialized;
 
         public Form1()
         {
@@ -100,7 +98,6 @@ namespace Ping_Pong_Client
             {
                 controle_player2();
                 calculate_enemy_player1();
-                controle_ball();
             }
         }
 
@@ -125,13 +122,12 @@ namespace Ping_Pong_Client
                 gameTimer.Stop();
                 MessageBox.Show("Player_2 wins more luck next time looooser!");
             }
-            player2.go_down = Convert.ToBoolean(array_data_received_server[0]);
-            player2.go_up = Convert.ToBoolean(array_data_received_server[1]);
-            player2.player_score = Convert.ToInt32(array_data_received_server[2]);
+
+
 
             if (server.ClientConnected)
             {
-                server.send(serialize_player1());
+                server.send(Sz.serialize_player1(player1) + Sz.serialize_ball_data(ball1));
             }
 
 
@@ -183,11 +179,17 @@ namespace Ping_Pong_Client
                 gameTimer.Stop();
                 MessageBox.Show("Player_2 wins more luck next time looooser!");
             }
-            client.send(serialize_player2());
-            player1.go_down = Convert.ToBoolean(array_data_received_client[0]);
-            player1.go_up = Convert.ToBoolean(array_data_received_client[1]);
-            player1.player_score = Convert.ToInt32(array_data_received_client[2]);
 
+            client.send(Sz.serialize_player2(player2));
+            process_received_ball_data();
+        }
+        private void process_received_ball_data()
+        {
+            ball.Top = ball1.ball_posy;
+            ball.Left = ball1.ball_posx;
+
+            player1_score.Text = "" + player1.player_score;
+            player2_score.Text = "" + player2.player_score;
 
         }
 
@@ -198,32 +200,35 @@ namespace Ping_Pong_Client
             player2_score.Text = "" + player2.player_score;
 
             //controlling ball
-            ball.Top -= bally;//füge position ball y und geschwindigkeit y zusammen
-            ball.Left -= ballx;//füge position ball x und geschwindigkeit x zusammen
+            ball.Top -= ball1.bally;//füge position ball y und geschwindigkeit y zusammen
+            ball.Left -= ball1.ballx;//füge position ball x und geschwindigkeit x zusammen
 
             if (ball.Left < 0)
             {
                 ball.Left = 434;//setze den Ball wieder in die Mitte
-                ballx = -ballx;//ändere die Richtung
-                ballx -= 2;//beschleunige den Ball
+                ball1.ballx = -ball1.ballx;//ändere die Richtung
+                ball1.ballx -= 1;//beschleunige den Ball
                 player2.player_score++;//erhöhe Punkte um 1
             }
             if (ball.Left + ball.Width > ClientSize.Width)
             {
                 ball.Left = 434;
-                ballx = -ballx;
-                ballx += 2;
+                ball1.ballx = -ball1.ballx;
+                ball1.ballx += 1;
                 player1.player_score++;
             }
 
             if (ball.Top < 0 || ball.Top + ball.Height > ClientSize.Height)
             {
-                bally = -bally;
+                ball1.bally = -ball1.bally;
             }
             if (ball.Bounds.IntersectsWith(player_1.Bounds) || ball.Bounds.IntersectsWith(player_2.Bounds))
             {
-                ballx = -ballx;
+                ball1.ballx = -ball1.ballx;
             }
+            ball1.ball_posy = ball.Top;
+            ball1.ball_posx = ball.Left;
+
         }
         public void callback_receive_server(string[] data)
         {
@@ -239,13 +244,14 @@ namespace Ping_Pong_Client
                 {
                     player2.go_up = true;
                 }
+                player2.player_score = Convert.ToInt32(data[2]);
+                
             }
-            array_data_received_server = data;
             Console.WriteLine("@Server: callback finished");
         }
         public void callback_receive_client(string[] data)
         {
-            if (data.Length > 2)
+            if (data.Length > 6)
             {
                 player1.go_down = false;
                 player1.go_up = false;
@@ -257,23 +263,15 @@ namespace Ping_Pong_Client
                 {
                     player1.go_up = true;
                 }
-
+                player1.player_score = Convert.ToInt32(data[2]);
+                ball1.ballx = Convert.ToInt32(data[3]);
+                ball1.bally = Convert.ToInt32(data[4]);
+                ball1.ball_posx = Convert.ToInt32(data[5]);
+                ball1.ball_posy = Convert.ToInt32(data[6]);
             }
-
-            array_data_received_client = data;
             Console.WriteLine("@Client: callback finished");
         }
-        public string serialize_player1()
-        {
-            serialized = player1.go_down + "," + player1.go_up + "," + player1.player_score;
-            return serialized;
-        }
 
-        public string serialize_player2()
-        {
-            serialized = player2.go_down + "," + player2.go_up + "," + player2.player_score;
-            return serialized;
-        }
 
     }
 }
