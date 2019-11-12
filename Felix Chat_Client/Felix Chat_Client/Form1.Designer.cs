@@ -38,11 +38,11 @@
             this.RemoteIPText = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.buttonListen = new System.Windows.Forms.Button();
+            this.buttonConnect = new System.Windows.Forms.Button();
             this.MessageList = new System.Windows.Forms.ListBox();
             this.MessageText = new System.Windows.Forms.TextBox();
             this.buttonSend = new System.Windows.Forms.Button();
-            this.server_info = new System.Windows.Forms.Label();
+            this.client_info = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -137,15 +137,15 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "IP";
             // 
-            // buttonListen
+            // buttonConnect
             // 
-            this.buttonListen.Location = new System.Drawing.Point(744, 50);
-            this.buttonListen.Name = "buttonListen";
-            this.buttonListen.Size = new System.Drawing.Size(182, 47);
-            this.buttonListen.TabIndex = 2;
-            this.buttonListen.Text = "Listen";
-            this.buttonListen.UseVisualStyleBackColor = true;
-            this.buttonListen.Click += new System.EventHandler(this.buttonListen_Click);
+            this.buttonConnect.Location = new System.Drawing.Point(744, 50);
+            this.buttonConnect.Name = "buttonConnect";
+            this.buttonConnect.Size = new System.Drawing.Size(182, 47);
+            this.buttonConnect.TabIndex = 2;
+            this.buttonConnect.Text = "Connect";
+            this.buttonConnect.UseVisualStyleBackColor = true;
+            this.buttonConnect.Click += new System.EventHandler(this.buttonConnect_Click);
             // 
             // MessageList
             // 
@@ -173,25 +173,25 @@
             this.buttonSend.UseVisualStyleBackColor = true;
             this.buttonSend.Click += new System.EventHandler(this.buttonSend_Click);
             // 
-            // server_info
+            // client_info
             // 
-            this.server_info.AutoSize = true;
-            this.server_info.Location = new System.Drawing.Point(747, 104);
-            this.server_info.Name = "server_info";
-            this.server_info.Size = new System.Drawing.Size(73, 17);
-            this.server_info.TabIndex = 6;
-            this.server_info.Text = "ServerInfo";
+            this.client_info.AutoSize = true;
+            this.client_info.Location = new System.Drawing.Point(747, 107);
+            this.client_info.Name = "client_info";
+            this.client_info.Size = new System.Drawing.Size(66, 17);
+            this.client_info.TabIndex = 6;
+            this.client_info.Text = "ClientInfo";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(965, 446);
-            this.Controls.Add(this.server_info);
+            this.Controls.Add(this.client_info);
             this.Controls.Add(this.buttonSend);
             this.Controls.Add(this.MessageText);
             this.Controls.Add(this.MessageList);
-            this.Controls.Add(this.buttonListen);
+            this.Controls.Add(this.buttonConnect);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
@@ -218,11 +218,11 @@
         private System.Windows.Forms.TextBox RemoteIPText;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button buttonListen;
+        private System.Windows.Forms.Button buttonConnect;
         private System.Windows.Forms.ListBox MessageList;
         private System.Windows.Forms.TextBox MessageText;
         private System.Windows.Forms.Button buttonSend;
-        private System.Windows.Forms.Label server_info;
+        private System.Windows.Forms.Label client_info;
     }
 }
 

@@ -15,15 +15,24 @@ namespace Felix_Chat
 {
     public partial class Form1 : Form
     {
-        Socket Server_sock;
+        Socket Client_sock;
         EndPoint ep_local, ep_remote;
         byte[] buffer;
-        bool Client_connect = false;
         string saveMessage;
+        
+
+        public void changeMessageList(string Message_cleared)
+        {
+            saveMessage = Message_cleared;
+            SetMessageList(saveMessage);
+        }
+            
+
         public Form1()
         {
             InitializeComponent();
         }
+
         public void SetMessageList(String saveMessage)
         {
             if (InvokeRequired)
@@ -31,47 +40,41 @@ namespace Felix_Chat
                 this.Invoke((MethodInvoker)delegate () { SetMessageList(saveMessage); });
                 return;
             }
-            if (Client_connect == true)
-            {
-                server_info.Text = "connected";
-            }
             MessageList.Items.Add("Remote: " + saveMessage);
         }
 
-        public void changeMessageList(string return_data_cleared)
-        {
-            saveMessage = return_data_cleared;
-            SetMessageList(saveMessage);
-        }
-        private void startlisteningThreadServer()
-        {
-            Thread Listening_Thread_Server = new Thread(recieve);
-            Listening_Thread_Server.Start();
-        }
         private void Form1_Load(object sender, EventArgs e)
         {
             //set up socket
-            Server_sock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            Client_sock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             LocalIPText.Text = GetLocalIP();
             RemoteIPText.Text = GetLocalIP();
         }
-        private void buttonListen_Click(object sender, EventArgs e)
+        private void startlisteningThreadClient()
+        {
+            Thread listeningThreadClient = new Thread(recieve);
+            listeningThreadClient.Start();
+        }
+
+        private void buttonConnect_Click(object sender, EventArgs e)
         {
             //binding socket
             ep_local = new IPEndPoint(IPAddress.Parse(LocalIPText.Text), Convert.ToInt32(LocalPortText.Text));
-            Server_sock.Bind(ep_local);
+            Client_sock.Bind(ep_local);
             //connecting to remoteip
             ep_remote = new IPEndPoint(IPAddress.Parse(RemoteIPText.Text), Convert.ToInt32(RemotePortText.Text));
-            startlisteningThreadServer();
+            Client_sock.Connect(ep_remote);
+            send_handshake();
         }
         private void recieve()
         {
-            string return_data="";
-            while(return_data != "ciao")
+            string Message = "";
+            while (Message != "ciao")
             {
+                //listening on specific port
                 buffer = new byte[1024];
-                Server_sock.ReceiveFrom(buffer, ref ep_remote);
-                MessageCallBack(return_data);
+                Client_sock.Receive(buffer);
+                MessageCallBack(buffer,Message);
             }
         }
 
@@ -88,29 +91,34 @@ namespace Felix_Chat
             }
             return "127.0.0.1";
         }
+        private void send_handshake()
+        {
+            ASCIIEncoding Encoding = new ASCIIEncoding();
+            byte[] handshake = new byte[1024];
+            handshake = Encoding.GetBytes("connect");
+            client_info.Text = "connected";
+            Client_sock.Send(handshake);
+            startlisteningThreadClient();
+        }
 
         private void buttonSend_Click(object sender, EventArgs e)
         {
             ASCIIEncoding Encoding = new ASCIIEncoding();
-            byte[] sendingMessage = new byte[1024];
-            sendingMessage = Encoding.GetBytes(MessageText.Text);
-            if (Client_connect == true)
-            {
-                Server_sock.SendTo(sendingMessage, ep_remote);
-                MessageList.Items.Add("Local: " + MessageText.Text);
-                MessageText.Text = "";
-            }
+            byte[] sendingMesage = new byte[1024];
+            sendingMesage = Encoding.GetBytes(MessageText.Text);
+            Client_sock.Send(sendingMesage);
+            MessageList.Items.Add("Local: " + MessageText.Text);
+            
+
+            MessageText.Text = "";
         }
 
-        private void MessageCallBack(string return_data)
+        private void MessageCallBack(byte[]buffer,string Message)
         {
-            return_data = ASCIIEncoding.ASCII.GetString(buffer).Trim();
-            string return_data_cleared = return_data.Replace("\0", string.Empty);
-            if (return_data_cleared == "connect")
-            {
-                Client_connect = true;
-            }
-            changeMessageList(return_data_cleared);
+          Message = ASCIIEncoding.ASCII.GetString(buffer).Trim();
+          string Message_cleared = Message.Replace("\0", string.Empty);
+            changeMessageList(Message_cleared);
         }
+
     }
 }
