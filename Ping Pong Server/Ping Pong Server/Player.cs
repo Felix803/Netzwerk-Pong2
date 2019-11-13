@@ -16,6 +16,7 @@ namespace Ping_Pong_Client
         public bool go_up;//verwendet für validiere Key Events
         public bool go_down;//verwendet für validiere Key Events
         public int player_score = 0;//Punktzahl Spieler 1
+
         public Player(bool goup, bool godown, int playerscore)
         {
             go_up = goup;

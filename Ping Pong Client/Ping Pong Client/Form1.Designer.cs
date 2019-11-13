@@ -105,7 +105,6 @@ namespace Ping_Pong_Client
             // 
             // gameTimer
             // 
-            this.gameTimer.Enabled = true;
             this.gameTimer.Interval = 20;
             this.gameTimer.Tick += new System.EventHandler(this.timertick);
             // 
@@ -119,6 +118,7 @@ namespace Ping_Pong_Client
             this.Server_Info.Size = new System.Drawing.Size(61, 13);
             this.Server_Info.TabIndex = 6;
             this.Server_Info.Text = "Server_info";
+            this.Server_Info.Visible = false;
             // 
             // panel1
             // 
@@ -140,6 +140,7 @@ namespace Ping_Pong_Client
             this.Server_Button.Text = "Starte Server";
             this.Server_Button.UseVisualStyleBackColor = true;
             this.Server_Button.Click += new System.EventHandler(this.Server_Button_Click);
+            this.Server_Button.Visible = false;
             // 
             // panel2
             // 
@@ -161,6 +162,7 @@ namespace Ping_Pong_Client
             this.Client_info.Size = new System.Drawing.Size(57, 13);
             this.Client_info.TabIndex = 1;
             this.Client_info.Text = "Client_Info";
+            this.Client_info.Visible = false;
             // 
             // Client_Button
             // 
@@ -172,6 +174,7 @@ namespace Ping_Pong_Client
             this.Client_Button.Text = "Starte Client";
             this.Client_Button.UseVisualStyleBackColor = true;
             this.Client_Button.Click += new System.EventHandler(this.Client_Button_Click);
+            this.Client_Button.Visible = false;
             // 
             // Form1
             // 
@@ -190,7 +193,7 @@ namespace Ping_Pong_Client
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
-            this.Text = "Ping Pong Game";
+            this.Text = "Server";
             ((System.ComponentModel.ISupportInitialize)(this.player_1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.player_2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ball)).EndInit();

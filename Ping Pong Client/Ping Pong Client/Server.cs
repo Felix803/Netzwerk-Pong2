@@ -11,32 +11,45 @@ using System.Xml.Serialization;
 
 namespace Ping_Pong_Client
 {
-    class Server : Networkcomponent
+    public class Server : Networkcomponent
     {
         UdpClient server = new UdpClient(8008);
         Deserializer Dz = new Deserializer();
         Form1 f1;
         byte[] sendBytes = new Byte[1024];
 
-        bool clientConnected = false;
-        public bool ClientConnected
-        {
-            get
-            {
-                return this.clientConnected;
-            }
-            set
-            {
-                this.clientConnected = value;
-            }
-        }
+        public bool clientConnected { get; set; }
 
         public Server(Form1 form)
         {
             f1 = form;
         }
+
+        public Server()
+        {
+        }
+
+        public void addForm(Form1 form)
+        {
+            f1 = form;
+        }
+
         IPEndPoint remoteIPEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 0);
-        public void startTrheadServer()
+
+        public bool start()
+        {
+            byte[] receivedBytes = server.Receive(ref remoteIPEndPoint);
+
+            string rcvdata = Encoding.ASCII.GetString(receivedBytes);
+
+            if (rcvdata == "Connect")
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void startThreadServer()
         {
             Thread ListeningThreadServer = new Thread(receive);
             ListeningThreadServer.Start();
@@ -48,9 +61,9 @@ namespace Ping_Pong_Client
             while (true)
             {
                 byte[] receivedBytes = server.Receive(ref remoteIPEndPoint);
-
+                
                 string rcvdata = Encoding.ASCII.GetString(receivedBytes);
-
+                
                 if (rcvdata == "Connect")
                 {
                     clientConnected = true;
@@ -59,11 +72,6 @@ namespace Ping_Pong_Client
                 }
 
                 string[] array_return_server = Dz.deserialize(rcvdata);
-
-                for (int i = 0; i < array_return_server.Length; i++)
-                {
-                    //Console.WriteLine("@Server: recieved data " + array_return_server[i]);
-                }
 
                 f1.callback_receive_server(array_return_server);
             }
@@ -81,7 +89,7 @@ namespace Ping_Pong_Client
             {
                 Console.WriteLine(ex);
             }
-
+ 
         }
     }
     /* class NWServer

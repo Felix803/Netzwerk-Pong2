@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ping_Pong_Client
 {
-    class Networkcomponent
+    public class Networkcomponent
     {
         public virtual void send()
         {

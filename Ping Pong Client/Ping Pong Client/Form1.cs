@@ -19,8 +19,8 @@ namespace Ping_Pong_Client
 {
     public partial class Form1 : Form
     {
-        Client client;
-        Server server;
+        public Client client;
+        public Server server;
         Player player1 = new Player(false, false, 0);
         Player player2 = new Player(false, false, 0);
         Ball ball1 = new Ball(5, 5, 434, 225);
@@ -31,23 +31,40 @@ namespace Ping_Pong_Client
         public Form1()
         {
             InitializeComponent();
+            Hide();
+            NWsettings settings = new NWsettings(this);
+            settings.ShowDialog();
+            Show();
+            gameTimer.Start();
+        }
+
+        public Form1(Client c, Server s)
+        {
+            InitializeComponent();
+            client = c;
+            server = s;
+            Client_Button.Enabled = false;
+            Server_Button.Enabled = false;
         }
 
         public void change_Client_Info(string client_info)
         {
             Client_info.Text = client_info;
         }
+
         private void Client_Button_Click(object sender, EventArgs e)
         {
             client = new Client(this);
             client.startThreadClient();
+            
         }
+
         private void Server_Button_Click(object sender, EventArgs e)
         {
             server = new Server(this);
 
             Server_Info.Text = "Server bereit.";
-            server.startTrheadServer();
+            server.startThreadServer();
         }
 
         public void change_Server_Info(string server_info)
@@ -59,7 +76,6 @@ namespace Ping_Pong_Client
         //sorgt dafür dass die Key eingabe an die Steuerelement der UI übergeben werden trotz fehlendem focus
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-
             if (keyData == Keys.Up)
             {
                 player1.go_down = false;
@@ -122,17 +138,13 @@ namespace Ping_Pong_Client
                 gameTimer.Stop();
                 MessageBox.Show("Player_2 wins more luck next time looooser!");
             }
-
-
-
-            if (server.ClientConnected)
+            
+            if (server.clientConnected)
             {
                 server.send(Sz.serialize_player1(player1) + Sz.serialize_ball_data(ball1));
             }
-
-
-
         }
+
         private void calculate_enemy_player2()
         {
             if (player2.go_up == true && player_2.Top > 0)
@@ -179,18 +191,17 @@ namespace Ping_Pong_Client
                 gameTimer.Stop();
                 MessageBox.Show("Player_2 wins more luck next time looooser!");
             }
-
+            
             client.send(Sz.serialize_player2(player2));
             process_received_ball_data();
         }
+
         private void process_received_ball_data()
         {
             ball.Top = ball1.ball_posy;
             ball.Left = ball1.ball_posx;
-
             player1_score.Text = "" + player1.player_score;
             player2_score.Text = "" + player2.player_score;
-
         }
 
         private void controle_ball()
@@ -228,8 +239,8 @@ namespace Ping_Pong_Client
             }
             ball1.ball_posy = ball.Top;
             ball1.ball_posx = ball.Left;
-
         }
+
         public void callback_receive_server(string[] data)
         {
             if (data.Length > 2)
@@ -245,10 +256,10 @@ namespace Ping_Pong_Client
                     player2.go_up = true;
                 }
                 player2.player_score = Convert.ToInt32(data[2]);
-                
             }
             Console.WriteLine("@Server: callback finished");
         }
+
         public void callback_receive_client(string[] data)
         {
             if (data.Length > 6)
@@ -271,7 +282,5 @@ namespace Ping_Pong_Client
             }
             Console.WriteLine("@Client: callback finished");
         }
-
-
     }
 }

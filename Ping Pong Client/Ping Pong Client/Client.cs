@@ -11,7 +11,8 @@ using System.Net.Sockets;
 namespace Ping_Pong_Client
 {
 
-    class Client:Networkcomponent
+
+    public class Client : Networkcomponent
     {
         byte[] sendBytes = new Byte[1024];
         byte[] rcvPacket = new Byte[1024];
@@ -25,6 +26,31 @@ namespace Ping_Pong_Client
         {
             f1 = form;
         }
+
+        public Client()
+        {
+        }
+
+        public void addForm(Form1 form)
+        {
+            f1 = form;
+        }
+
+        public bool start()
+        {
+            try
+            {
+                client.Connect(address, 8008);
+                send("Connect");
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            return false;
+        }
+
         public void startThreadClient()
         {
             client.Connect(address, 8008);
@@ -32,7 +58,6 @@ namespace Ping_Pong_Client
             Thread ListeningThreadClient = new Thread(receive);
             ListeningThreadClient.Start();
         }
-
 
         public void send(string data)
         {
@@ -46,13 +71,10 @@ namespace Ping_Pong_Client
             {
                 Console.WriteLine(ex);
             }
-           
-            
         }
 
         public override void receive()
         {
-            
             while (true)
             {
                 rcvPacket = client.Receive(ref remoteIPEndPoint);
@@ -60,16 +82,14 @@ namespace Ping_Pong_Client
                 Dz.deserialize(rcvData);
                 //Console.WriteLine("@Client: recieved data " + rcvData);
                 string[] array_return_client = Dz.deserialize(rcvData);
-   
+
                 for (int i = 0; i < array_return_client.Length; i++)
                 {
                     //Console.WriteLine("@Client: received data " + array_return_client[i]);
                 }
                 f1.callback_receive_client(array_return_client);
             }
-
         }
-
     }
 
     /*  class NWClient

@@ -12,6 +12,7 @@ namespace Ping_Pong_Client
         public int bally = 5;//vertikale Geschwindigkeit (Vektor)
         public int ball_posx;
         public int ball_posy;
+
         public Ball(int bx, int by, int bposx, int bposy)
         {
             ballx = bx;
