@@ -73,11 +73,6 @@ namespace Ping_Pong_Client
 
         private void keyisdown(object sender, KeyEventArgs e)
         {
-            player1.go_up = false;
-            player2.go_up = false;
-            player1.go_down = false;
-            player2.go_down = false;
-
             if (e.KeyCode == Keys.Up)
             {
                 player1.go_up = true;
@@ -139,6 +134,7 @@ namespace Ping_Pong_Client
                 player_1.Top += 8;
             }
             player1.player_posy = player_1.Top;
+
             if (player1.player_score > 10)
             {
                 gameTimer.Stop();

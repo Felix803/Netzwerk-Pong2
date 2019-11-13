@@ -73,10 +73,7 @@ namespace Ping_Pong_Client
 
         private void keyisdown(object sender, KeyEventArgs e)
         {
-            player1.go_up = false;
-            player2.go_up = false;
-            player1.go_down = false;
-            player2.go_down = false;
+            
 
             if (e.KeyCode == Keys.Up)
             {
