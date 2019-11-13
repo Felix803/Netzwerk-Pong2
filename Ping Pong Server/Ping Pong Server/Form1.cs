@@ -21,8 +21,8 @@ namespace Ping_Pong_Client
     {
         public Client client;
         public Server server;
-        Player player1 = new Player(false, false, 0);
-        Player player2 = new Player(false, false, 0);
+        Player player1 = new Player(false, false, 0, 225);
+        Player player2 = new Player(false, false, 0, 225);
         Ball ball1 = new Ball(5, 5, 434, 225);
         Serializer Sz = new Serializer();
 
@@ -46,15 +46,6 @@ namespace Ping_Pong_Client
             Client_Button.Enabled = false;
             Server_Button.Enabled = false;
         }
-        public void allow_communication_across_threads(int object_or_variable_to_invoke)
-        {
-            if (InvokeRequired)
-            {
-                this.Invoke((MethodInvoker)delegate () { allow_communication_across_threads(object_or_variable_to_invoke); });
-                return;
-            }
-            //invoke Method to communicate with other Thread
-        }
 
         public void change_Client_Info(string client_info)
         {
@@ -65,12 +56,12 @@ namespace Ping_Pong_Client
         {
             client = new Client(this);
             client.startThreadClient();
-            
         }
 
         private void Server_Button_Click(object sender, EventArgs e)
         {
             server = new Server(this);
+
             Server_Info.Text = "Server bereit.";
             server.startThreadServer();
         }
@@ -80,31 +71,42 @@ namespace Ping_Pong_Client
             Server_Info.Text = server_info;
         }
 
-
-        //sorgt dafür dass die Key eingabe an die Steuerelement der UI übergeben werden trotz fehlendem focus
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        private void keyisdown(object sender, KeyEventArgs e)
         {
-            if (keyData == Keys.Up)
+            player1.go_up = false;
+            player2.go_up = false;
+            player1.go_down = false;
+            player2.go_down = false;
+
+            if (e.KeyCode == Keys.Up)
             {
-                player1.go_down = false;
                 player1.go_up = true;
-            }
-            if (keyData == Keys.Down)
-            {
-                player1.go_down = true;
-                player1.go_up = false;
-            }
-            if (keyData == Keys.Up)
-            {
-                player2.go_down = false;
                 player2.go_up = true;
             }
-            if (keyData == Keys.Down)
+            if (e.KeyCode == Keys.Down)
             {
+                player1.go_down = true;
                 player2.go_down = true;
+            }
+
+        }
+        private void keyisup(object sender, KeyEventArgs e)
+        {
+            player1.go_up = false;
+            player2.go_up = false;
+            player1.go_down = false;
+            player2.go_down = false;
+
+            if (e.KeyCode == Keys.Up)
+            {
+                player1.go_down = false;
+                player2.go_down = false;
+            }
+            if (e.KeyCode == Keys.Down)
+            {
+                player1.go_up = false;
                 player2.go_up = false;
             }
-            return base.ProcessCmdKey(ref msg, keyData);
         }
 
 
@@ -114,14 +116,14 @@ namespace Ping_Pong_Client
             if (server != null)
             {
                 controle_player1();
-                calculate_enemy_player2();
+                calculate_enemy_player(player2);
                 controle_ball();
             }
 
             if (client != null)
             {
                 controle_player2();
-                calculate_enemy_player1();
+                calculate_enemy_player(player1);
             }
         }
 
@@ -136,6 +138,7 @@ namespace Ping_Pong_Client
             {
                 player_1.Top += 8;
             }
+            player1.player_posy = player_1.Top;
             if (player1.player_score > 10)
             {
                 gameTimer.Stop();
@@ -146,40 +149,15 @@ namespace Ping_Pong_Client
                 gameTimer.Stop();
                 MessageBox.Show("Player_2 wins more luck next time looooser!");
             }
-            
+
             if (server.clientConnected)
             {
-                server.send(Sz.serialize_player1(player1) + Sz.serialize_ball_data(ball1));
-            }
-        }
-
-        private void calculate_enemy_player2()
-        {
-            if (player2.go_up == true && player_2.Top > 0)
-            {
-                player_2.Top -= 8;
-            }
-            if (player2.go_down == true && player_2.Top < 455)
-            {
-                player_2.Top += 8;
-            }
-        }
-
-        private void calculate_enemy_player1()
-        {
-            if (player1.go_up == true && player_1.Top > 0)
-            {
-                player_1.Top -= 8;
-            }
-            if (player1.go_down == true && player_1.Top < 455)
-            {
-                player_1.Top += 8;
+                server.send(Sz.serialize_player(player1) + Sz.serialize_ball_data(ball1));
             }
         }
 
         private void controle_player2()
         {
-
             //controlling Player
             if (player2.go_up == true && player_2.Top > 0)
             {
@@ -189,6 +167,7 @@ namespace Ping_Pong_Client
             {
                 player_2.Top += 8;
             }
+            player2.player_posy = player_2.Top;
             if (player2.player_score > 10)
             {
                 gameTimer.Stop();
@@ -199,9 +178,36 @@ namespace Ping_Pong_Client
                 gameTimer.Stop();
                 MessageBox.Show("Player_2 wins more luck next time looooser!");
             }
-            
-            client.send(Sz.serialize_player2(player2));
+
+            client.send(Sz.serialize_player(player2));
             process_received_ball_data();
+        }
+
+        private void calculate_enemy_player(Player player)
+        {
+            if (server != null)
+            {
+                if (player2.go_up == true && player_2.Top > 0)
+                {
+                    player_2.Top -= 8;
+                }
+                if (player2.go_down == true && player_2.Top < 455)
+                {
+                    player_2.Top += 8;
+                }
+            }
+            else if (client != null)
+            {
+                if (player1.go_up == true && player_1.Top > 0)
+                {
+                    player_1.Top -= 8;
+                }
+                if (player1.go_down == true && player_1.Top < 455)
+                {
+                    player_1.Top += 8;
+                }
+            }
+
         }
 
         private void process_received_ball_data()
@@ -251,44 +257,36 @@ namespace Ping_Pong_Client
 
         public void callback_receive_server(string[] data)
         {
-            if (data.Length > 2)
+            if (data.Length > 3)
             {
-                player2.go_down = false;
                 player2.go_up = false;
-                if (data[0] == "True")
-                {
-                    player2.go_down = true;
-                }
-                if (data[1] == "True")
-                {
-                    player2.go_up = true;
-                }
+                player2.go_down = false;
+                player2.go_down = Convert.ToBoolean(data[0]);
+                player2.go_up = Convert.ToBoolean(data[1]);
                 player2.player_score = Convert.ToInt32(data[2]);
+                player2.player_posy = Convert.ToInt32(data[3]);
             }
             Console.WriteLine("@Server: callback finished");
         }
 
         public void callback_receive_client(string[] data)
         {
-            if (data.Length > 6)
+            if (data.Length > 7)
             {
-                player1.go_down = false;
                 player1.go_up = false;
-                if (data[0] == "True")
-                {
-                    player1.go_down = true;
-                }
-                if (data[1] == "True")
-                {
-                    player1.go_up = true;
-                }
+                player1.go_down = false;
+                player1.go_down = Convert.ToBoolean(data[0]);
+                player1.go_up = Convert.ToBoolean(data[1]);
                 player1.player_score = Convert.ToInt32(data[2]);
-                ball1.ballx = Convert.ToInt32(data[3]);
-                ball1.bally = Convert.ToInt32(data[4]);
-                ball1.ball_posx = Convert.ToInt32(data[5]);
-                ball1.ball_posy = Convert.ToInt32(data[6]);
+                player1.player_posy = Convert.ToInt32(data[3]);
+                ball1.ballx = Convert.ToInt32(data[4]);
+                ball1.bally = Convert.ToInt32(data[5]);
+                ball1.ball_posx = Convert.ToInt32(data[6]);
+                ball1.ball_posy = Convert.ToInt32(data[7]);
             }
             Console.WriteLine("@Client: callback finished");
         }
+
+
     }
 }

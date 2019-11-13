@@ -10,20 +10,15 @@ namespace Ping_Pong_Client
     {
         string serialized;
         string ball_data_serialized;
-        public string serialize_player1(Player player1)
+        public string serialize_player(Player player)
         {
-            serialized = player1.go_down + "," + player1.go_up + "," + player1.player_score + ",";
+            serialized = player.go_down + "," + player.go_up + "," + player.player_score + "," + player.player_posy;
             return serialized;
         }
 
-        public string serialize_player2(Player player2)
-        {
-            serialized = player2.go_down + "," + player2.go_up + "," + player2.player_score;
-            return serialized;
-        }
         public string serialize_ball_data(Ball ball1)
         {
-            ball_data_serialized = ball1.ballx + "," + ball1.bally + "," + ball1.ball_posx + "," + ball1.ball_posy;
+            ball_data_serialized = ","+ball1.ballx + "," + ball1.bally + "," + ball1.ball_posx + "," + ball1.ball_posy;
             return ball_data_serialized;
         }
     }

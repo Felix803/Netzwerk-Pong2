@@ -139,8 +139,8 @@ namespace Ping_Pong_Client
             this.Server_Button.TabIndex = 7;
             this.Server_Button.Text = "Starte Server";
             this.Server_Button.UseVisualStyleBackColor = true;
-            this.Server_Button.Click += new System.EventHandler(this.Server_Button_Click);
             this.Server_Button.Visible = false;
+            this.Server_Button.Click += new System.EventHandler(this.Server_Button_Click);
             // 
             // panel2
             // 
@@ -173,8 +173,8 @@ namespace Ping_Pong_Client
             this.Client_Button.TabIndex = 0;
             this.Client_Button.Text = "Starte Client";
             this.Client_Button.UseVisualStyleBackColor = true;
-            this.Client_Button.Click += new System.EventHandler(this.Client_Button_Click);
             this.Client_Button.Visible = false;
+            this.Client_Button.Click += new System.EventHandler(this.Client_Button_Click);
             // 
             // Form1
             // 
@@ -194,6 +194,8 @@ namespace Ping_Pong_Client
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Server";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.keyisdown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.keyisup);
             ((System.ComponentModel.ISupportInitialize)(this.player_1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.player_2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ball)).EndInit();
