@@ -62,6 +62,7 @@ namespace Konsolen_Chat_Client
         }
         private void send()
         {
+            Console.WriteLine("Please type 'connected' to connect to server!");
             while (true)
             {
                 buffer_send = new byte[64];

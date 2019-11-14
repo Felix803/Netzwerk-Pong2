@@ -61,7 +61,7 @@ namespace Konsolen_Chat
             {
                 Thread sending_thread = new Thread(send);
                 sending_thread.Start();
-                Console.WriteLine("connected");
+                Console.WriteLine("Server Status: connected");
                 client_connected = true;
             }
             Console.WriteLine("Received Message is: " + received_message);
