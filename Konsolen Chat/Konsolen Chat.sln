@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.645
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Konsolen Chat", "Konsolen Chat\Konsolen Chat.csproj", "{DCF47A03-AAD6-4918-9B35-251486FB898B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Konsolen Chat Client", "Konsolen Chat Client\Konsolen Chat Client.csproj", "{4432A6AE-1F81-4499-881D-1893A0DD98D8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DCF47A03-AAD6-4918-9B35-251486FB898B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCF47A03-AAD6-4918-9B35-251486FB898B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCF47A03-AAD6-4918-9B35-251486FB898B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCF47A03-AAD6-4918-9B35-251486FB898B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4432A6AE-1F81-4499-881D-1893A0DD98D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4432A6AE-1F81-4499-881D-1893A0DD98D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4432A6AE-1F81-4499-881D-1893A0DD98D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4432A6AE-1F81-4499-881D-1893A0DD98D8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {560F21CB-0330-4C7C-B391-052E331D281E}
+	EndGlobalSection
+EndGlobal
